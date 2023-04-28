@@ -29,6 +29,7 @@ public class CommandExecutorProxy implements CommandExecutor {
 			System.out.println(sonda.notifica());
 			gestoreRepo.save(gestore);
 			System.out.println("Pericolo incendio, segnalazione inviata al centro di controllo");
+			
 		}else if(lvFumo <= 5 && gestore.getMessaggioAllarme() != null) {
 			gestore.setAllarme(false);
 			gestore.setMessaggioAllarme(null);
