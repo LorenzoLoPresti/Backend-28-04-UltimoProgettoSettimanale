@@ -33,6 +33,7 @@ public class CommandExecutorProxy implements CommandExecutor {
 			gestore.setAllarme(false);
 			gestore.setMessaggioAllarme(null);
 			gestoreRepo.save(gestore);
+			System.out.println("Pericolo scampato");
 		}
 		else {
 			System.out.println("Nessun pericolo");
