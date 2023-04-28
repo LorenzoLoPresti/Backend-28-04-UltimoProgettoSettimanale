@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.GestioneIncendi.configuration.SondeFactory;
 import com.GestioneIncendi.model.Allarme;
-import com.GestioneIncendi.model.CommandExecutorProxy2;
+import com.GestioneIncendi.model.CommandExecutorProxy;
 import com.GestioneIncendi.model.GestoreSonde;
 import com.GestioneIncendi.model.Sonda;
 import com.GestioneIncendi.service.AllarmeService;
@@ -19,7 +19,7 @@ public class gestoreRunner implements ApplicationRunner{
 
 	@Autowired ObjectProvider<SondeFactory> allarmeProvider;
 	@Autowired AllarmeService allarmeService;
-	@Autowired CommandExecutorProxy2 proxy;
+	@Autowired CommandExecutorProxy proxy;
 	
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
@@ -69,7 +69,7 @@ public class gestoreRunner implements ApplicationRunner{
 //		System.out.println(gestoreLetto);
 		
 		// FUNZIONE PERICOLO INCENDIO
-		proxy.controlloFumo(3, sondaLetta);
+		proxy.controlloFumo(4, sondaLetta);
 		System.out.println(sondaLetta);
 		
 		
