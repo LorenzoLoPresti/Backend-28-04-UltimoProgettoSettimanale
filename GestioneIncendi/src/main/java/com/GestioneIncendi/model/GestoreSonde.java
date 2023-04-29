@@ -11,6 +11,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -39,11 +40,15 @@ public class GestoreSonde implements Allarme{
 	@Builder.Default
 	@JsonIgnoreProperties
 	List<Sonda> listaSondeAssociate = new ArrayList<Sonda>();
+	@ManyToOne
+	CentroDiControllo centroDiControllo;
 	
 	@Override
 	public String notifica() {
-		// TODO Auto-generated method stub
-		return null;
+		this.setAllarme(true);
+		String allarme = "Pericolo incendio, segnalazione inviata al centro di controllo";
+		System.out.println(allarme);
+		return allarme;
 	}
 
 	@Override

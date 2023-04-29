@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
 import com.GestioneIncendi.model.Allarme;
+import com.GestioneIncendi.model.CentroDiControllo;
 import com.GestioneIncendi.model.GestoreSonde;
 import com.GestioneIncendi.model.Sonda;
 
@@ -17,12 +18,14 @@ public class SondeFactory {
 		if (tipo == null) {
 			return null;
 		}
-		if(tipo.equalsIgnoreCase("sonda")) {
-			return new Sonda();
+		else if(tipo.equalsIgnoreCase("sonda")) {
+			return Sonda.builder().livelloFumo(0).build();
 		} else if(tipo.equalsIgnoreCase("gestore")){
-			return new GestoreSonde();
+			return GestoreSonde.builder().allarme(false).build();
 		}
-		
+		else if(tipo.equalsIgnoreCase("controllo")) {
+			return new CentroDiControllo();
+		}
 		return null;
 	}
 	

@@ -28,20 +28,17 @@ public class Sonda implements Allarme{
 	@Column(nullable = false)
 	String longitudine;
 	@Column(nullable = false)
-	@Builder.Default
-	Integer livelloFumo = 0;
+	Integer livelloFumo;
 	@ManyToOne
 	GestoreSonde gestoreSondeAssociato;
 	
 	@Override
 	public String notifica() {
 		if(this.livelloFumo > 5) {
-			System.out.println("Pericolo incendio!!!");
 			return "http://host/alarm?=idsonda=" + this.getId()
 			+ "&lat=" + this.getLatitudine() + "&lon=" + this.getLongitudine()
 			+ "&smokelevel=" + this.getLivelloFumo();
 		}
-		System.out.println("Nessun pericolo");
 		return null;
 		// TODO Auto-generated method stub
 		
