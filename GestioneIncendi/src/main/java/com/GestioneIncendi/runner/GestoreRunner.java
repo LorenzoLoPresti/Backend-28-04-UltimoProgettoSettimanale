@@ -1,6 +1,5 @@
 package com.GestioneIncendi.runner;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.ObjectProvider;
@@ -17,7 +16,6 @@ import com.GestioneIncendi.model.GestoreSonde;
 import com.GestioneIncendi.model.Sonda;
 import com.GestioneIncendi.service.AllarmeService;
 
-import jakarta.persistence.EntityNotFoundException;
 
 
 @Component
