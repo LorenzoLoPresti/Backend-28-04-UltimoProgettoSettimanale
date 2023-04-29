@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 import com.GestioneIncendi.configuration.SondeFactory;
 import com.GestioneIncendi.model.Allarme;
 import com.GestioneIncendi.model.CentroDiControllo;
-import com.GestioneIncendi.model.CommandExecutorProxy;
 import com.GestioneIncendi.model.GestoreSonde;
 import com.GestioneIncendi.model.Sonda;
 import com.GestioneIncendi.service.AllarmeService;
@@ -23,18 +22,22 @@ public class GestoreRunner implements ApplicationRunner{
 
 	@Autowired ObjectProvider<SondeFactory> allarmeProvider;
 	@Autowired AllarmeService allarmeService;
-	@Autowired CommandExecutorProxy proxy;
 	
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		// TODO Auto-generated method stub
 		System.out.println("Run...");
 		
 		// CREO DATABASE
-	//	creaDb();
+		// creaDb();
 		
 		// FUNZIONE PERICOLO INCENDIO
-		scansiona();
+		// All'update della sonda nel db se il livello fumo supera 5 si avvia
+		// la catena di osservazione
+		
+//		Sonda sondaLetta = allarmeService.trovaSondaPerId(1l);
+//		sondaLetta.setLivelloFumo(6);
+//		allarmeService.updateSondaDb(sondaLetta);
+//		scansiona();
 		
 		
 		
@@ -57,7 +60,7 @@ public class GestoreRunner implements ApplicationRunner{
 		}		
 		System.out.println("\nResponso sonde:");
 		for (GestoreSonde gestoreSonde : listaGestori) {			
-			gestoreSonde.getListaSondeAssociate().forEach(e -> proxy.controlloFumo(e));
+			gestoreSonde.getListaSondeAssociate().forEach(e -> allarmeService.controlloFumo(e));
 		}
 
 	}

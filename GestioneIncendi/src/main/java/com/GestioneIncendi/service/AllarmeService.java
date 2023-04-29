@@ -16,7 +16,7 @@ import com.GestioneIncendi.repository.SondaRepository;
 import com.github.javafaker.Faker;
 
 @Service
-public class AllarmeService {
+public class AllarmeService implements ExecutorProxy {
 
 	@Autowired
 	SondaRepository repoSonda;
@@ -57,8 +57,7 @@ public class AllarmeService {
 	}
 	
 	public void updateSondaDb(Sonda sonda) {
-		repoSonda.save(sonda);
-		System.out.println("sonda aggiornata");
+		this.controlloFumo(sonda);
 	}
 
 	public void updateGestoreDb(GestoreSonde gestore) {
@@ -80,6 +79,35 @@ public class AllarmeService {
 	
 	public List<CentroDiControllo> listaCentriControllo(){
 		return (List<CentroDiControllo>) repoControllo.findAll();
+	}
+
+	@Override
+	public void controlloFumo(Sonda sonda) {
+		Integer lvFumo = sonda.getLivelloFumo();
+		repoSonda.save(sonda);
+		GestoreSonde gestore = repoGestore.findById(sonda.getGestoreSondeAssociato().getId()).get();
+		CentroDiControllo controllo = repoControllo.findById(gestore.getCentroDiControllo().getId()).get();
+		if(lvFumo > 5) {
+//			gestore.setMessaggioAllarme("http://host/alarm?=idsonda=" + sonda.getId()
+//					+ "&lat=" + sonda.getLatitudine() + "&lon=" + sonda.getLongitudine()
+//					+ "&smokelevel=" + sonda.getLivelloFumo());
+			gestore.setMessaggioAllarme(sonda.notifica());
+			System.out.print("Sonda " + sonda.getId() + " : ");			
+			System.out.println(gestore.notifica());
+			System.out.println(controllo.notifica());
+			System.out.println(controllo.AllertaPersonale(sonda.notifica() + "\n"));
+			repoGestore.save(gestore);
+			
+		}else if(lvFumo <= 5 && gestore.getMessaggioAllarme() != null) {
+			gestore.setAllarme(false);
+			gestore.setMessaggioAllarme(null);
+			repoGestore.save(gestore);
+			System.out.println("Sonda " + sonda.getId() + " :Pericolo scampato \n");
+		}
+		else {
+			System.out.println("Sonda " + sonda.getId() + " :Nessun pericolo \n");
+		}
+		
 	}
 	
 }
