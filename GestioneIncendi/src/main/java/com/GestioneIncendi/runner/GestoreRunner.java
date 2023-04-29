@@ -35,7 +35,7 @@ public class GestoreRunner implements ApplicationRunner{
 		// la catena di osservazione
 		
 //		Sonda sondaLetta = allarmeService.trovaSondaPerId(1l);
-//		sondaLetta.setLivelloFumo(6);
+//		sondaLetta.setLivelloFumo(3);
 //		allarmeService.updateSondaDb(sondaLetta);
 //		scansiona();
 		

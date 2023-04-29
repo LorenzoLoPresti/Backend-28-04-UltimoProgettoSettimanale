@@ -83,11 +83,10 @@ public class AllarmeService implements ExecutorProxy {
 
 	@Override
 	public void controlloFumo(Sonda sonda) {
-		Integer lvFumo = sonda.getLivelloFumo();
 		repoSonda.save(sonda);
 		GestoreSonde gestore = repoGestore.findById(sonda.getGestoreSondeAssociato().getId()).get();
 		CentroDiControllo controllo = repoControllo.findById(gestore.getCentroDiControllo().getId()).get();
-		if(lvFumo > 5) {
+		if(sonda.getLivelloFumo() > 5) {
 //			gestore.setMessaggioAllarme("http://host/alarm?=idsonda=" + sonda.getId()
 //					+ "&lat=" + sonda.getLatitudine() + "&lon=" + sonda.getLongitudine()
 //					+ "&smokelevel=" + sonda.getLivelloFumo());
@@ -98,7 +97,7 @@ public class AllarmeService implements ExecutorProxy {
 			System.out.println(controllo.AllertaPersonale(sonda.notifica() + "\n"));
 			repoGestore.save(gestore);
 			
-		}else if(lvFumo <= 5 && gestore.getMessaggioAllarme() != null) {
+		}else if(sonda.getLivelloFumo() <= 5 && gestore.getMessaggioAllarme() != null) {
 			gestore.setAllarme(false);
 			gestore.setMessaggioAllarme(null);
 			repoGestore.save(gestore);
